@@ -6,12 +6,12 @@ from ckeditor.fields import RichTextField
 # Create your models here.
 
 class Usuario(models.Model):
-    tipo_de_usuario = Administrador o cliente.
+    #tipo_de_usuario = Administrador o cliente.
     correo_elec = models.CharField(max_length=40)
     clave =  models.CharField(max_length=40)
     apellido =  models.CharField(max_length=40)
     nombre =  models.CharField(max_length=40)
-    fecha_nac = 
+    #fecha_nac = 
     nro_celular = models.IntegerField()
     direccion = models.CharField(max_length=40)
     ciudad = models.CharField(max_length=40)
