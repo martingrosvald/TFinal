@@ -8,58 +8,58 @@ from django_countries.fields import CountryField
 # Create your models here.
 
 class Usuario(models.Model):
-    #t_usuario = [
-    #    (ADMINISTRADOR, "Administrador"),
-    #    (CLIENTE, "Cliente"),
-    #    ]
-    #tipo_de_usuario = models.CharField(
-    #    max_length=20,
-    #    choices=t_usuario, 
-    #    default=CLIENTE,
+    #t_usuario = (
+    #    ("1", "Administrador"),
+    #    ("2", "Cliente")
     #    )
-    tipo_de_usuario = models.CharField(max_length=40)
+    #tipo_de_usuario = models.CharField(
+    #    max_length = 20,
+    #    choices = t_usuario, 
+    #    default = "1"
+    #    )
+    tipo_de_usuario=models.CharField(max_length=40)
     clave =  models.CharField(max_length=40)
-    apellido =  models.CharField(max_length=40)
-    nombre =  models.CharField(max_length=40)
+    apellido_nombre =  models.CharField(max_length=80)
     correo_elec = models.EmailField(max_length=90)
-    fecha_nac = models.DateField()
     nro_celular = models.IntegerField()
-    direccion = models.CharField(max_length=100)
-    ciudad = models.CharField(max_length=40)
-    provincia = models.CharField(max_length=40)
-    codigo_postal = models.CharField(max_length=40)
-    pais = CountryField()
+    direccion = models.CharField(max_length=200)
+    #pais = CountryField()
 
 class Producto(models.Model):
     id_producto = models.IntegerField()
     nombre_producto = models.CharField(max_length=40)
+    #opciones_cat_productos=(
+    #    ("1", "Textil"), 
+    #    ("2", "Elementos de pesca"),
+    #    ("3", "Accesorios")
+    #        )
     #categoria_producto = models.CharField(
-    #    choices=(
-    #        (1, _("Textil")), 
-    #        (2, _("Elementos de pesca")),
-    #        (3, _("Accesorios"))
-    #        ), 
-    #    default=1
-    #    )
+    #    max_length=20,
+    #    choices=opciones_cat_productos, 
+    #    default="1")
+    categoria_producto=models.CharField(max_length=40)
     marca_producto = models.CharField(max_length=40)
     descripcion_producto= RichTextField()
     precio = models.IntegerField()
     cantidad_disponible = models.IntegerField()
     #fotos_productos= models.ImageField(upload_to="productos", null=True, blank=True)
-    responsable_carga = models.CharField(max_length=40)
+    #responsable_carga = models.CharField(max_length=40)
     fecha_creacion_producto = models.DateField()
-    fecha_actualiz = models.DateField() 
+    #fecha_actualiz = models.DateField() 
 
-#class Ventas (models.Model):
-    #fecha_venta = models.DateField()
-    #usuario_vendedor = Usuario()
-    #detalle_venta = Producto() #como poner la cantidad de cada producto
-    pass
+class Ventas(models.Model):
+    id_venta = models.IntegerField()
+    fecha_venta = models.DateField()
+    id_producto = models.IntegerField()
+    cantidad_producto= models.IntegerField()
+    valor_total= models.IntegerField()
+    #usuario_transaccion = 
+    
 
-#class Historial_stock(models.Model, Producto, Usuario):
-    #fecha_movimiento = Producto.fecha_actualiz()
-    #producto_movimiento = Producto.nombre_producto()
-    #responsable_movimiento = Producto.responsable_carga()
-    #tipo_mov = Venta() o Producto()
-    #cantidad = poner el cambio en la cantidad del producto
-    pass
+#class Historial_stock(models.Model):
+#    fecha_movimiento = models.Datefield()
+#    id_producto_movimiento = models.CharField(max_length=40)
+#    responsable_movimiento = models.CharField(max_length=40)
+#    tipo_mov = 
+#    #cantidad = poner el cambio en la cantidad del producto
+#    pass
