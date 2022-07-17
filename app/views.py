@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from app.forms import Agregar_Producto, Agregar_Usuario, Realizar_venta
+from app.forms import Agregar_Producto, Agregar_Usuario, Realizar_venta, Busqueda_Producto
 from app.models import Producto, Usuario, Ventas
 from ckeditor.fields import RichTextField
 # Create your views here.
@@ -23,3 +23,59 @@ def listar_producto(request):
     
     context["producto"] = Producto.objects.all()
     return render(request, "app/listado_producto.html", context)
+
+
+def altaUsuario(request):
+    if request.method == 'POST':
+        agregar_usuario = Agregar_Usuario(request.POST)
+        
+        if agregar_usuario.is_valid():
+            informacionu = agregar_usuario.cleaned_data
+            usuario = Usuario(tipo_de_usuario=informacionu["tipo_de_usuario"], clave=informacionu["clave"], apellido_nombre=informacionu["apellido_nombre"],correo_elec=informacionu["correo_elec"],nro_celular=informacionu["nro_celular"],direccion=informacionu["direccion"])
+            usuario.save()
+        return render (request, "app/listado_usuario.html")
+    
+    else:
+        agregar_usuario= Agregar_Usuario()
+    return render (request,"app/agregar_usuario.html",{"agregar_usuario":agregar_usuario})
+
+def listar_usuario(request):
+    context= {}
+    
+    context["usuario"] = Usuario.objects.all()
+    return render(request, "app/listado_usuario.html", context)
+
+def altaVenta(request):
+    if request.method == 'POST':
+        realizar_venta = Realizar_venta(request.POST)
+        
+        if realizar_venta.is_valid():
+            informacionv = realizar_venta.cleaned_data
+            venta = Ventas(id_venta=informacionv["id_venta"], fecha_venta=informacionv["fecha_venta"], id_producto=informacionv["id_producto"],cantidad_producto=informacionv["cantidad_producto"],valor_total=informacionv["valor_total"])
+            venta.save()
+        return render (request, "app/listado_ventas.html")
+    
+    else:
+        realizar_venta= Realizar_venta()
+    return render (request,"app/realizar_venta.html",{"realizar_venta":realizar_venta})
+
+def listar_ventas(request):
+    context= {}
+    
+    context["venta"] = Ventas.objects.all()
+    return render(request, "app/listado_ventas.html", context)
+
+#def busqueda_producto(request):
+#   return render(request,"app/busqueda_producto.html")
+
+def buscarProducto(request):
+    
+    formulario_busqueda = Busqueda_Producto()
+    
+    if request.GET:
+        formulario_busqueda = Busqueda_Producto (request.GET)
+        if formulario_busqueda.is_valid():
+            producto = Producto.objects.filter(nombre_producto=formulario_busqueda["criterio"]).all()
+            return render(request, "app/busqueda_producto.html", {"nombre_producto": nombre_producto})
+    
+    return render(request, "app/busqueda_producto.html", {"formulario_busqueda":formulario_busqueda})

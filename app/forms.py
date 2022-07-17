@@ -45,3 +45,6 @@ class Realizar_venta (forms.Form):
     id_producto = forms.IntegerField()
     cantidad_producto= forms.IntegerField()
     valor_total= forms.IntegerField()
+
+class Busqueda_Producto (forms.Form):
+    criterio = forms.CharField(max_length=40)
